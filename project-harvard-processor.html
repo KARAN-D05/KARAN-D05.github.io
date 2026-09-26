@@ -30,9 +30,6 @@
     <figcaption>System organization: 12 RTL modules coordinated by the control unit.</figcaption>
   </figure>
 
-  <h2>Verification</h2>
-  <p>The RTL is verified with both classical Verilog testbenches and self-checking cocotb testbenches, across three strategies: directed tests for reset, load, hold, increment, and control priority; randomized tests validated in Python against a software reference model; and, for combinational modules like the ALU, exhaustive tests covering every possible input combination.</p>
-
   <div class="fig-row">
     <figure>
       <img class="diagram" src="https://raw.githubusercontent.com/KARAN-D05/Harvard-Processor/main/Computer/images/matmul_waveform.png" alt="Waveform for 2x2 matrix multiplication program" loading="lazy">
@@ -41,8 +38,7 @@
   </div>
 
   <h2>Amdahl's Law study: removing the MAR</h2>
-  <p>An architectural study examined what happens when the Memory Address Register is eliminated from the datapath, letting memory be addressed more directly. Before the change, 84% of the ISA executed in 2 T-states; after it, 100% did, giving every instruction a uniform 2-cycle execution time. Amdahl's Law was used to validate the change: with the serial (non-optimizable) fraction of each program fixed, the predicted speedup from raising the optimized fraction to 100% was checked against the actual, measured cycle counts across three benchmark programs of increasing size.</p>
-
+  <p>An architectural study examined what happens when the Memory Address Register is eliminated from the datapath, letting memory be addressed more directly. Before the change, 84% of the ISA executed in 2 T-states; after it, 100% did, giving every instruction a uniform 2-cycle execution time. Amdahl's Law was used to validate the change.
   <div class="spec-scroll">
   <table class="spec-table">
     <caption>Measured effect of the MAR optimization, by benchmark</caption>
@@ -52,25 +48,7 @@
     <tr><td>2&times;2 matrix multiplication</td><td>1.231&times;</td><td>12,256</td></tr>
   </table>
   </div>
-  <div class="note">The larger and more instruction-dense the workload, the more absolute cycles the optimization recovers, exactly the behavior Amdahl's Law predicts once the optimized fraction of execution approaches 100%. Full methodology, workload analysis, and the Amdahl's Law validation are documented in the repository's Architectural Studies folder.</div>
-
-  <h2>Physical characterization</h2>
-  <p>Post-synthesis results below use the Sky130HD standard-cell library, with static timing analysis constrained to a 10 ns clock, 1 ns input delay, and 1 ns output delay.</p>
-
-  <div class="spec-scroll">
-  <table class="spec-table">
-    <caption>Post-synthesis characterization, Sky130HD</caption>
-    <tr><th>Module</th><th>Area</th><th>Critical path</th><th>Fmax</th><th>Power</th></tr>
-    <tr><td>General Purpose Registers</td><td>320.3 µm²</td><td>1.41 ns</td><td>~709 MHz</td><td>39.8 µW</td></tr>
-    <tr><td>Arithmetic and Logic Unit</td><td>877.1 µm²</td><td>3.21 ns</td><td>~311 MHz</td><td>349 µW</td></tr>
-    <tr><td>Control Unit</td><td>359.1 µm²</td><td>2.29 ns</td><td>~437 MHz</td><td>41.4 µW</td></tr>
-    <tr><td>ROM (256&times;8)</td><td>2,277.2 µm²</td><td>2.85 ns</td><td>~351 MHz</td><td>888 µW</td></tr>
-    <tr><td>RAM (256&times;8)</td><td>75,862.8 µm²</td><td>5.18 ns</td><td>~208 MHz</td><td>9.88 mW</td></tr>
-    <tr><td>Full Computer</td><td>80,347.1 µm²</td><td>25.55 ns</td><td>~39 MHz</td><td>8.67 mW</td></tr>
-  </table>
-  </div>
-  <div class="note">RAM dominates system area and delay because it's implemented as flip-flops with decode and multiplexing logic rather than a dedicated SRAM macro, no synthesizable Sky130 SRAM primitive was available for this design.</div>
-
+ 
   <div class="tools">Toolchain: <span>Verilog, Icarus Verilog, Verilator, Yosys, OpenSTA, cocotb, GTKWave, Sky130HD</span></div>
 
   <div class="repo-cta"><a class="cta" href="https://github.com/KARAN-D05/Harvard-Processor">View repository on GitHub &rarr;</a></div>
