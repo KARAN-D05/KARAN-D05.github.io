@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Karan Diwan, digital systems, computer architecture, RTL and VLSI experiments built from first principles.">
+<title>Karan Diwan · Systems from First Principles</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=IBM+Plex+Mono:wght@400;500&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#10110f;
+  --paper:#151713;
+  --ink:#e6e1d6;
+  --muted:#aaa69b;
+  --faint:#77756d;
+  --line:#30312c;
+  --accent:#c5a978;
+  --accent2:#91a89b;
+  --max:1180px;
+  --reading:760px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Manrope,system-ui,sans-serif;line-height:1.7}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+::selection{background:#b9a17333;color:#fff}
+
+.page{width:min(var(--max),calc(100% - 48px));margin:auto}
+.reading{width:min(var(--reading),100%);margin-left:auto;margin-right:auto}
+
+.hero{min-height:100vh;display:flex;align-items:center;padding:72px 0 100px}
+.hero-inner{width:min(var(--reading),100%)}
+.kicker{font:500 12px/1 DM Mono,monospace;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:30px}
+h1{font:700 clamp(3rem,8vw,6.6rem)/.95 Manrope,sans-serif;letter-spacing:-.055em;margin:0 0 46px;color:#eeeae0}
+.quote{border-left:1px solid var(--accent);padding:4px 0 4px 25px;color:#c6c1b6;font:italic 20px/1.75 "Libre Baskerville",serif}
+.quote cite{display:block;margin-top:17px;font:400 12px/1.4 DM Mono,monospace;letter-spacing:.05em;color:var(--faint);font-style:normal}
+.intro{font:400 clamp(1.12rem,2vw,1.34rem)/1.85 "Libre Baskerville",serif;color:#d1cdc2;margin-top:58px}
+.intro p{margin:0 0 25px}
+.scroll-note{margin-top:55px;color:var(--faint);font:12px DM Mono,monospace;letter-spacing:.08em}
+.scroll-note span{color:var(--accent)}
+
+.section-head{display:flex;justify-content:space-between;gap:30px;align-items:end;border-top:1px solid var(--line);padding-top:22px;margin-bottom:72px}
+.section-no{font:500 11px DM Mono,monospace;color:var(--accent);letter-spacing:.12em}
+.section-title{font:500 clamp(1.8rem,3.5vw,3.2rem)/1.1 Manrope,sans-serif;letter-spacing:-.035em;margin:0}
+.section-sub{max-width:390px;color:var(--muted);font-size:14px;line-height:1.65;margin:0}
+
+.project{padding:115px 0 140px;border-top:1px solid var(--line)}
+.project:first-of-type{border-top:0}
+.project-meta{display:flex;align-items:baseline;gap:18px;margin-bottom:22px}
+.project-index{font:500 11px DM Mono,monospace;color:var(--accent);letter-spacing:.1em}
+.project h2{font:600 clamp(2rem,4vw,3.7rem)/1.05 Manrope,sans-serif;letter-spacing:-.045em;margin:0;color:#e9e5dc}
+.project-intro{width:min(700px,100%);font:400 18px/1.85 "Libre Baskerville",serif;color:#c5c1b7;margin:26px 0 30px}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:44px}
+.tag{font:500 10px DM Mono,monospace;letter-spacing:.06em;text-transform:uppercase;border:1px solid #383934;color:#a9a69d;padding:6px 9px}
+.repo{display:inline-flex;align-items:center;gap:9px;font:500 12px DM Mono,monospace;color:var(--accent);border-bottom:1px solid #766448;padding-bottom:5px}
+.repo:after{content:'↗';font-size:14px}
+
+.collage{margin-top:62px;display:grid;grid-template-columns:repeat(12,1fr);grid-auto-rows:64px;gap:12px;align-items:stretch}
+.tile{position:relative;overflow:hidden;border:1px solid #2c2d29;background:#191a17;min-width:0}
+.tile img{width:100%;height:100%;object-fit:cover;filter:saturate(.75) contrast(.98);transition:transform .5s ease,filter .5s ease}
+.tile:hover img{transform:scale(1.025);filter:saturate(.95) contrast(1.02)}
+.tile.contain img{object-fit:contain;padding:14px;background:#141512}
+.tile figcaption{position:absolute;left:0;bottom:0;padding:8px 10px;background:linear-gradient(transparent,rgba(0,0,0,.75));width:100%;font:10px DM Mono,monospace;color:#c9c5bb;letter-spacing:.03em}
+.tall{grid-row:span 6}.medium{grid-row:span 4}.wide{grid-column:span 7}.half{grid-column:span 5}.third{grid-column:span 4}.two{grid-column:span 8}.full{grid-column:1/-1}
+.placeholder{display:none}
+
+.project-note{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:30px;color:#8f8c83;font-size:12px;line-height:1.65}
+.metric{border-top:1px solid var(--line);padding-top:12px}.metric b{display:block;color:#d0cbc0;font:500 13px DM Mono,monospace;margin-bottom:3px}
+
+.older{padding:110px 0 130px;border-top:1px solid var(--line)}
+.older-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-top:60px}
+.older-card{border:1px solid var(--line);background:#141512;padding:28px;min-height:300px;display:flex;flex-direction:column;justify-content:space-between}
+.older-card h3{font:600 21px/1.2 Manrope,sans-serif;margin:0 0 15px;letter-spacing:-.02em}
+.older-card p{font:14px/1.75 "Libre Baskerville",serif;color:#9f9b91;margin:0}
+.older-card .repo{margin-top:30px;align-self:flex-start}
+
+.closing{padding:150px 0 100px;border-top:1px solid var(--line)}
+.closing .reading{width:min(780px,100%)}
+.closing-lead{font:400 clamp(1.25rem,2.4vw,1.65rem)/1.9 "Libre Baskerville",serif;color:#c9c4b8;margin-bottom:75px}
+.popol{border-left:1px solid #81765e;padding-left:27px;font:italic clamp(1.05rem,2vw,1.3rem)/1.9 "Libre Baskerville",serif;color:#b9b4aa}
+.popol cite{display:block;margin-top:22px;font:400 11px DM Mono,monospace;color:#77746c;font-style:normal;letter-spacing:.04em}
+.footer{padding:50px 0 70px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);font:11px DM Mono,monospace;color:var(--faint)}
+.footer a{color:#b7a77e}.footer-links{display:flex;gap:22px}
+
+@media(max-width:800px){
+  .page{width:min(var(--max),calc(100% - 30px))}
+  .hero{padding-top:55px}.quote{font-size:17px}.intro{font-size:1.02rem}
+  .section-head{display:block}.section-sub{margin-top:18px}
+  .collage{grid-template-columns:1fr 1fr;grid-auto-rows:70px;gap:9px}
+  .wide,.two,.full{grid-column:1/-1}.half,.third{grid-column:span 1}
+  .tall{grid-row:span 5}.medium{grid-row:span 4}
+  .project-note{grid-template-columns:1fr}
+  .older-grid{grid-template-columns:1fr}
+}
+@media(max-width:500px){
+  h1{font-size:3.35rem}.project{padding:90px 0 105px}.closing{padding-top:110px}
+  .collage{grid-template-columns:1fr;grid-auto-rows:230px}.wide,.two,.full,.half,.third{grid-column:1}.tall,.medium{grid-row:span 1}
+  .footer{display:block}.footer-links{margin-top:15px}
+}
+</style>
+</head>
+<body>
+<main class="page">
+<section class="hero">
+  <div class="hero-inner">
+    <div class="kicker">Digital Systems · Computer Architecture · VLSI</div>
+    <h1>Karan Diwan</h1>
+    <div class="quote">
+      “Dovere is my hand, tho small,<br>
+      May I not add with truth;<br>
+      I do my best to please you all,<br>
+      Encourage then my youth.”
+      <cite>- The Maillardet Automaton, 1800</cite>
+    </div>
+    <div class="intro">
+      <p>I build systems from first principles to understand how structure gives rise to computation, and how computation gives rise to intelligence.</p>
+      <p>My work moves through arithmetic machinery, stored-program architectures, hardware-level learning models, and the physical consequences of digital design.</p>
+      <p>This site is a record of that exploration.</p>
+    </div>
+    <div class="scroll-note"><span>↓</span> the machines begin below</div>
+  </div>
+</section>
+
+<section class="reading" id="work">
+  <div class="section-head">
+    <div><div class="section-no">01 / WORK</div><h2 class="section-title">From gates to machines</h2></div>
+    <p class="section-sub">A visual record of systems built, measured, and taken apart again to understand what makes them work.</p>
+  </div>
+</section>
+
+<!-- HARVARD -->
+<section class="project">
+  <div class="project-meta"><span class="project-index">01</span><h2>Harvard Processor</h2></div>
+  <p class="project-intro">A parameterized multi-cycle Harvard architecture processor, built around a custom instruction set and a hardwired control system. The work extends from RTL and self-checking verification through Sky130 synthesis, timing analysis, and post-synthesis evaluation.</p>
+  <div class="tags"><span class="tag">Verilog</span><span class="tag">Cocotb</span><span class="tag">Sky130HD</span><span class="tag">STA</span><span class="tag">GLS</span></div>
+  <a class="repo" href="https://github.com/KARAN-D05/Harvard-Processor" target="_blank" rel="noreferrer">Repository</a>
+  <div class="collage">
+    <figure class="tile wide tall contain"><img data-candidates="https://raw.githubusercontent.com/KARAN-D05/Harvard-Processor/main/images/Organization.png|https://raw.githubusercontent.com/KARAN-D05/Harvard-Processor/main/images/organization.png|https://raw.githubusercontent.com/KARAN-D05/Harvard-Processor/main/Computer/Organization.png|https://raw.githubusercontent.com/KARAN-D05/Harvard-Processor/main/Computer/organization.png" alt="Harvard processor organization diagram"><figcaption>system organization</figcaption></figure>
+    <figure class="tile half medium"><img data-candidates="https://raw.githubusercontent.com/KARAN-D05/Harvard-Processor/main/images/Matmul.png|https://raw.githubusercontent.com/KARAN-D05/Harvard-Processor/main/images/matmul.png|https://raw.githubusercontent.com/KARAN-D05/Harvard-Processor/main/Computer/Matmul.png" alt="Matrix multiplication waveform"><figcaption>2×2 matrix multiplication</figcaption></figure>
+    <figure class="tile half medium"><img data-candidates="https://raw.githubusercontent.com/KARAN-D05/Harvard-Processor/main/images/Mult.png|https://raw.githubusercontent.com/KARAN-D05/Harvard-Processor/main/images/mult.png|https://raw.githubusercontent.com/KARAN-D05/Harvard-Processor/main/Computer/Mult.png" alt="Processor multiplication waveform"><figcaption>repeated-addition multiplication</figcaption></figure>
+    <figure class="tile third medium"><img data-candidates="https://raw.githubusercontent.com/KARAN-D05/Harvard-Processor/main/images/Max.png|https://raw.githubusercontent.com/KARAN-D05/Harvard-Processor/main/images/max.png|https://raw.githubusercontent.com/KARAN-D05/Harvard-Processor/main/Computer/Max.png" alt="Maximum program waveform"><figcaption>conditional execution</figcaption></figure>
+    <figure class="tile third medium"><img data-candidates="https://raw.githubusercontent.com/KARAN-D05/Harvard-Processor/main/images/Sqrt.png|https://raw.githubusercontent.com/KARAN-D05/Harvard-Processor/main/images/sqrt.png|https://raw.githubusercontent.com/KARAN-D05/Harvard-Processor/main/Computer/Sqrt.png" alt="Square root waveform"><figcaption>integer square root</figcaption></figure>
+    <figure class="tile third medium contain"><img data-candidates="https://raw.githubusercontent.com/KARAN-D05/Harvard-Processor/main/images/GLS.png|https://raw.githubusercontent.com/KARAN-D05/Harvard-Processor/main/images/gls.png|https://raw.githubusercontent.com/KARAN-D05/Harvard-Processor/main/images/GLS.jpg" alt="Gate level simulation"><figcaption>post-synthesis / GLS</figcaption></figure>
+  </div>
+  <div class="project-note"><div class="metric"><b>Physical characterization</b>Sky130HD standard-cell implementation with timing, area, and power analysis.</div><div class="metric"><b>Architectural study</b>MAR removal reduced steady-state CPI from about 2.54 to 2.00 while leaving the critical path essentially unchanged.</div></div>
+</section>
+
+<!-- ADDERS -->
+<section class="project">
+  <div class="project-meta"><span class="project-index">02</span><h2>High-Performance Adders</h2></div>
+  <p class="project-intro">Six 64-bit adder architectures explored as different answers to the same question: how should carry information move through a machine? The study continues from RTL into synthesis, timing, PPA comparison, GLS, and selected physical implementation.</p>
+  <div class="tags"><span class="tag">64-bit</span><span class="tag">Prefix Logic</span><span class="tag">Sky130HD</span><span class="tag">OpenROAD</span><span class="tag">GDSII</span></div>
+  <a class="repo" href="https://github.com/KARAN-D05/High-Performance-Adder-Architectures" target="_blank" rel="noreferrer">Repository</a>
+  <div class="collage">
+    <figure class="tile third medium contain"><img data-candidates="https://raw.githubusercontent.com/KARAN-D05/High-Performance-Adder-Architectures/main/images/RCA.png|https://raw.githubusercontent.com/KARAN-D05/High-Performance-Adder-Architectures/main/images/rca.png|https://raw.githubusercontent.com/KARAN-D05/High-Performance-Adder-Architectures/main/RCA/RCA.png" alt="Ripple carry adder"><figcaption>RCA</figcaption></figure>
+    <figure class="tile third medium contain"><img data-candidates="https://raw.githubusercontent.com/KARAN-D05/High-Performance-Adder-Architectures/main/images/CLA.png|https://raw.githubusercontent.com/KARAN-D05/High-Performance-Adder-Architectures/main/images/cla.png|https://raw.githubusercontent.com/KARAN-D05/High-Performance-Adder-Architectures/main/CLA/CLA.png" alt="Carry lookahead adder"><figcaption>CLA</figcaption></figure>
+    <figure class="tile third medium contain"><img data-candidates="https://raw.githubusercontent.com/KARAN-D05/High-Performance-Adder-Architectures/main/images/KSA.png|https://raw.githubusercontent.com/KARAN-D05/High-Performance-Adder-Architectures/main/images/ksa.png|https://raw.githubusercontent.com/KARAN-D05/High-Performance-Adder-Architectures/main/KSA/KSA.png" alt="Kogge Stone adder"><figcaption>KSA</figcaption></figure>
+    <figure class="tile wide tall contain"><img data-candidates="https://raw.githubusercontent.com/KARAN-D05/High-Performance-Adder-Architectures/main/images/KSA_GDSII.png|https://raw.githubusercontent.com/KARAN-D05/High-Performance-Adder-Architectures/main/images/KSA-GDSII.png|https://raw.githubusercontent.com/KARAN-D05/High-Performance-Adder-Architectures/main/images/KSA_GDS.png" alt="Kogge Stone GDSII layout"><figcaption>Kogge-Stone physical implementation</figcaption></figure>
+    <figure class="tile half medium contain"><img data-candidates="https://raw.githubusercontent.com/KARAN-D05/High-Performance-Adder-Architectures/main/images/BKA.png|https://raw.githubusercontent.com/KARAN-D05/High-Performance-Adder-Architectures/main/images/bka.png|https://raw.githubusercontent.com/KARAN-D05/High-Performance-Adder-Architectures/main/BKA/BKA.png" alt="Brent Kung adder"><figcaption>Brent-Kung</figcaption></figure>
+    <figure class="tile half medium contain"><img data-candidates="https://raw.githubusercontent.com/KARAN-D05/High-Performance-Adder-Architectures/main/images/Timing.png|https://raw.githubusercontent.com/KARAN-D05/High-Performance-Adder-Architectures/main/images/timing.png|https://raw.githubusercontent.com/KARAN-D05/High-Performance-Adder-Architectures/main/images/Performance.png" alt="Adder timing comparison"><figcaption>timing / PPA study</figcaption></figure>
+  </div>
+</section>
+
+<!-- MULTIPLIERS -->
+<section class="project">
+  <div class="project-meta"><span class="project-index">03</span><h2>High-Performance Multipliers</h2></div>
+  <p class="project-intro">A study of multiplication as an arithmetic datapath. Shift-and-add, Braun array, Wallace tree, and Dadda tree architectures are characterized through synthesis and timing, with the final carry-propagation stage connected back to the adder work.</p>
+  <div class="tags"><span class="tag">32-bit</span><span class="tag">Wallace Tree</span><span class="tag">Dadda Tree</span><span class="tag">PPA</span><span class="tag">GLS</span></div>
+  <a class="repo" href="https://github.com/KARAN-D05/High-Performance-Multipliers" target="_blank" rel="noreferrer">Repository</a>
+  <div class="collage">
+    <figure class="tile half tall contain"><img data-candidates="https://raw.githubusercontent.com/KARAN-D05/High-Performance-Multipliers/main/images/SHA.png|https://raw.githubusercontent.com/KARAN-D05/High-Performance-Multipliers/main/images/sha.png|https://raw.githubusercontent.com/KARAN-D05/High-Performance-Multipliers/main/SHA/SHA.png" alt="Shift and add multiplier"><figcaption>shift-and-add</figcaption></figure>
+    <figure class="tile half tall contain"><img data-candidates="https://raw.githubusercontent.com/KARAN-D05/High-Performance-Multipliers/main/images/WTM.png|https://raw.githubusercontent.com/KARAN-D05/High-Performance-Multipliers/main/images/wtm.png|https://raw.githubusercontent.com/KARAN-D05/High-Performance-Multipliers/main/WTM/WTM.png" alt="Wallace tree multiplier"><figcaption>Wallace tree</figcaption></figure>
+    <figure class="tile third medium contain"><img data-candidates="https://raw.githubusercontent.com/KARAN-D05/High-Performance-Multipliers/main/images/BAM.png|https://raw.githubusercontent.com/KARAN-D05/High-Performance-Multipliers/main/images/bam.png|https://raw.githubusercontent.com/KARAN-D05/High-Performance-Multipliers/main/BAM/BAM.png" alt="Braun array multiplier"><figcaption>Braun array</figcaption></figure>
+    <figure class="tile third medium contain"><img data-candidates="https://raw.githubusercontent.com/KARAN-D05/High-Performance-Multipliers/main/images/DTM.png|https://raw.githubusercontent.com/KARAN-D05/High-Performance-Multipliers/main/images/dtm.png|https://raw.githubusercontent.com/KARAN-D05/High-Performance-Multipliers/main/DTM/DTM.png" alt="Dadda tree multiplier"><figcaption>Dadda tree</figcaption></figure>
+    <figure class="tile third medium contain"><img data-candidates="https://raw.githubusercontent.com/KARAN-D05/High-Performance-Multipliers/main/images/Comparison.png|https://raw.githubusercontent.com/KARAN-D05/High-Performance-Multipliers/main/images/comparison.png|https://raw.githubusercontent.com/KARAN-D05/High-Performance-Multipliers/main/images/Performance.png" alt="Multiplier comparison"><figcaption>latency / throughput</figcaption></figure>
+  </div>
+  <div class="project-note"><div class="metric"><b>Fastest measured latency</b>Dadda tree: 5.65 ns in the Sky130HD characterization.</div><div class="metric"><b>Throughput view</b>The project separates Fmax from cycles per multiplication so iterative and combinational architectures can be compared meaningfully.</div></div>
+</section>
+
+<!-- CYBERNETIC -->
+<section class="project">
+  <div class="project-meta"><span class="project-index">04</span><h2>Gate-Level Cybernetic Classifier</h2></div>
+  <p class="project-intro">An experiment in whether adaptive, learning-like behavior can emerge from deterministic digital structure. The system evolves from strict Boolean pattern relations to popcount-based decisions and finally feedback-driven threshold adaptation.</p>
+  <div class="tags"><span class="tag">Digital Logic</span><span class="tag">Popcount</span><span class="tag">Feedback</span><span class="tag">MIDS</span><span class="tag">SATU</span></div>
+  <a class="repo" href="https://github.com/KARAN-D05/Gate-Level-Cybernetic-Classifier" target="_blank" rel="noreferrer">Repository</a>
+  <div class="collage">
+    <figure class="tile wide tall contain"><img data-candidates="https://raw.githubusercontent.com/KARAN-D05/Gate-Level-Cybernetic-Classifier/main/Detector_v1.0/Detector_v1.0.png|https://raw.githubusercontent.com/KARAN-D05/Gate-Level-Cybernetic-Classifier/main/Detector_v1.0/block_diagram.png|https://raw.githubusercontent.com/KARAN-D05/Gate-Level-Cybernetic-Classifier/main/Detector_v1.0/Block_Diagram.png" alt="Cybernetic classifier block diagram"><figcaption>decision boundary architecture</figcaption></figure>
+    <figure class="tile half medium contain"><img data-candidates="https://raw.githubusercontent.com/KARAN-D05/Gate-Level-Cybernetic-Classifier/main/Detector_v1.1/MIDS.png|https://raw.githubusercontent.com/KARAN-D05/Gate-Level-Cybernetic-Classifier/main/Detector_v1.1/mids.png|https://raw.githubusercontent.com/KARAN-D05/Gate-Level-Cybernetic-Classifier/main/Detector_v1.1/MIDS_Algorithm.png" alt="MIDS adaptive learning"><figcaption>MIDS · O(N)</figcaption></figure>
+    <figure class="tile half medium contain"><img data-candidates="https://raw.githubusercontent.com/KARAN-D05/Gate-Level-Cybernetic-Classifier/main/Detector_v1.1/SATU.png|https://raw.githubusercontent.com/KARAN-D05/Gate-Level-Cybernetic-Classifier/main/Detector_v1.1/satu.png|https://raw.githubusercontent.com/KARAN-D05/Gate-Level-Cybernetic-Classifier/main/Detector_v1.1/SATU_Algorithm.png" alt="SATU adaptive learning"><figcaption>SATU · O(1)</figcaption></figure>
+    <figure class="tile third medium contain"><img data-candidates="https://raw.githubusercontent.com/KARAN-D05/Gate-Level-Cybernetic-Classifier/main/Detector_v0.2/Detector_v0.2.png|https://raw.githubusercontent.com/KARAN-D05/Gate-Level-Cybernetic-Classifier/main/Detector_v0.2/block_diagram.png|https://raw.githubusercontent.com/KARAN-D05/Gate-Level-Cybernetic-Classifier/main/Detector_v0.2/Block_Diagram.png" alt="Classifier v0.2"><figcaption>pattern relations</figcaption></figure>
+    <figure class="tile third medium contain"><img data-candidates="https://raw.githubusercontent.com/KARAN-D05/Gate-Level-Cybernetic-Classifier/main/Detector_v0.0/Detector_v0.0.png|https://raw.githubusercontent.com/KARAN-D05/Gate-Level-Cybernetic-Classifier/main/Detector_v0.0/equivalence.png" alt="Boolean recognizer"><figcaption>strict matching</figcaption></figure>
+    <figure class="tile third medium contain"><img data-candidates="https://raw.githubusercontent.com/KARAN-D05/Gate-Level-Cybernetic-Classifier/main/Detector_v1.1/Synthesis.png|https://raw.githubusercontent.com/KARAN-D05/Gate-Level-Cybernetic-Classifier/main/Detector_v1.1/synthesis.png|https://raw.githubusercontent.com/KARAN-D05/Gate-Level-Cybernetic-Classifier/main/Detector_v0.2/Synthesis.png" alt="Synthesized classifier"><figcaption>Sky130 synthesis</figcaption></figure>
+  </div>
+</section>
+
+<section class="older">
+  <div class="section-head">
+    <div><div class="section-no">05 / FOUNDATIONS</div><h2 class="section-title">Earlier machines</h2></div>
+    <p class="section-sub">Smaller systems that became the vocabulary for the larger ones.</p>
+  </div>
+  <div class="older-grid">
+    <article class="older-card"><div><h3>Repeated Arithmetic Machine</h3><p>A 4-bit feedback-driven stored-program machine that grew from arithmetic experiments into automated, programmable computation.</p></div><a class="repo" href="https://github.com/KARAN-D05/Repeated-Arithmetic-Machine" target="_blank" rel="noreferrer">Repository</a></article>
+    <article class="older-card"><div><h3>Assembler</h3><p>A symbolic translation layer connecting assembly language to the machine code of the custom architecture.</p></div><a class="repo" href="https://github.com/KARAN-D05/Assembler" target="_blank" rel="noreferrer">Repository</a></article>
+    <article class="older-card"><div><h3>Artificial Neuron</h3><p>A gate-level McCulloch-Pitts neuron with programmable threshold and inhibitory weights, capable of expressing basic logic functions.</p></div><a class="repo" href="https://github.com/KARAN-D05/Artificial-Neuron" target="_blank" rel="noreferrer">Repository</a></article>
+  </div>
+</section>
+
+<section class="closing">
+  <div class="reading">
+    <p class="closing-lead">The machines remain small. The questions do not. Each system is another attempt to see how far simple structures can be pushed before the abstraction we gave them begins to look like something else.</p>
+    <blockquote class="popol">
+      “They were endowed with intelligence, they succeeded in knowing all that is in the world. When they looked, instantly they saw all that is around them, and they contemplated in turn the arc of heaven and the round face of the earth...”
+      <cite>- <i>Popol Vuh</i></cite>
+    </blockquote>
+  </div>
+</section>
+
+<footer class="footer">
+  <span>© Karan Diwan</span>
+  <div class="footer-links"><a href="https://github.com/KARAN-D05" target="_blank" rel="noreferrer">GitHub</a><a href="#work">Work ↑</a></div>
+</footer>
+</main>
+<script>
+/* Each image keeps a small candidate list because GitHub repositories evolve their documentation filenames.
+   The first available repository artifact is used. Missing candidates are silently skipped. */
+document.querySelectorAll('img[data-candidates]').forEach(img => {
+  const candidates = img.dataset.candidates.split('|');
+  let i = 0;
+  const tryNext = () => {
+    if (i >= candidates.length) {
+      img.closest('.tile').classList.add('placeholder');
+      return;
+    }
+    img.src = candidates[i++];
+  };
+  img.addEventListener('error', tryNext);
+  tryNext();
+});
+</script>
+</body>
+</html>
