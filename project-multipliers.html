@@ -21,11 +21,13 @@
   <p class="breadcrumb"><a href="projects.html">Projects</a> / High-Performance Multipliers</p>
 
   <h1 class="page-title">High-Performance Multipliers</h1>
-  <p class="tagline">Four 32-bit multiplier architectures, compared by what actually matters: throughput.</p>
 
+  <figure>
+    <img class="diagram" src="https://raw.githubusercontent.com/High-Performance-Multipliers/blob/main/WTM/images/wtm_waveform.png" alt="32-Bit Wallace Tree Multiplication" loading="lazy">
+    <figcaption>32-Bit Wallace Tree Multiplication.</figcaption>
+  </figure>
+  
   <p>This project extends the same question from the <a class="inline" href="project-adders.html">adder study</a> to multiplication: four 32-bit architectures, Shift-and-Add (SHA), Braun Array (BAM), Wallace Tree (WTM), and Dadda Tree (DTM), characterized on identical terms using the Sky130HD standard-cell library. It also measures how the choice of final carry-propagate adder changes overall multiplier performance, reusing the adder IP from the project above.</p>
-
-  <p>Because these architectures use fundamentally different execution models, Fmax alone doesn't describe multiplication performance well. Shift-and-Add is iterative, spending 32 clock cycles per multiplication; the others are combinational, producing one result per operation. Throughput is measured directly to make the comparison fair.</p>
 
   <h2>Post-synthesis characterization, Sky130HD</h2>
   <p>All four results below use a 64-bit Kogge-Stone Adder as the final carry-propagate stage; a Ripple-Carry variant was also evaluated to isolate the effect of that final stage.</p>
@@ -59,15 +61,14 @@
     <tr><td>Dadda Tree</td><td>4.35&times;</td><td>1.10&times;</td><td>190.83&times;</td><td>0.028&times;</td><td>35.12&times;</td></tr>
   </table>
   </div>
-  <div class="note">Dadda Tree reaches roughly 35&times; the throughput of Shift-and-Add for about 4.4&times; the area, the clearest area-for-speed trade in the set. It also beats Wallace Tree on both area and speed, since a Dadda reduction tree needs fewer partial-product reduction stages for the same operand width.</div>
-
+  
   <div class="tools">Toolchain: <span>Verilog, Icarus Verilog, Yosys, OpenSTA, GTKWave, Sky130HD</span></div>
 
   <div class="repo-cta"><a class="cta" href="https://github.com/KARAN-D05/High-Performance-Multipliers">View repository on GitHub &rarr;</a></div>
 
   <div class="prev-next">
     <a href="project-adders.html">&larr; High-Performance Adder Architectures</a>
-    <a href="project-artificial-neuron.html">Next: Artificial Neuron &rarr;</a>
+    <a href="project-cybernetic-classifier.htm">Next: Gate-Level Cybernetic Classifier &rarr;</a>
   </div>
 
   <footer class="site">
