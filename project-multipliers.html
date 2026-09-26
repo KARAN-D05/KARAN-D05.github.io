@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>High-Performance Multipliers — Karan Diwan</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <a class="mark" href="index.html">Karan Diwan</a>
+    <nav class="site">
+      <a href="index.html">Home</a>
+      <a href="projects.html" class="active">Projects</a>
+      <a href="https://github.com/KARAN-D05">GitHub</a>
+    </nav>
+  </header>
+
+  <p class="breadcrumb"><a href="projects.html">Projects</a> / High-Performance Multipliers</p>
+
+  <h1 class="page-title">High-Performance Multipliers</h1>
+  <p class="tagline">Four 32-bit multiplier architectures, compared by what actually matters: throughput.</p>
+
+  <p>This project extends the same question from the <a class="inline" href="project-adders.html">adder study</a> to multiplication: four 32-bit architectures, Shift-and-Add (SHA), Braun Array (BAM), Wallace Tree (WTM), and Dadda Tree (DTM), characterized on identical terms using the Sky130HD standard-cell library. It also measures how the choice of final carry-propagate adder changes overall multiplier performance, reusing the adder IP from the project above.</p>
+
+  <p>Because these architectures use fundamentally different execution models, Fmax alone doesn't describe multiplication performance well. Shift-and-Add is iterative, spending 32 clock cycles per multiplication; the others are combinational, producing one result per operation. Throughput is measured directly to make the comparison fair.</p>
+
+  <h2>Post-synthesis characterization, Sky130HD</h2>
+  <p>All four results below use a 64-bit Kogge-Stone Adder as the final carry-propagate stage; a Ripple-Carry variant was also evaluated to isolate the effect of that final stage.</p>
+  <div class="spec-scroll">
+  <table class="spec-table">
+    <tr><th>Architecture</th><th>Area</th><th>Fmax</th><th>Crit. path</th><th>Power</th><th>ADP</th><th>PDP</th></tr>
+    <tr><td>Shift-and-Add (SHA)</td><td>9,266.4 µm²</td><td>~161.3 MHz</td><td>6.20 ns</td><td>807 µW</td><td>57,450</td><td>5,003</td></tr>
+    <tr><td>Braun Array (BAM)</td><td>36,198.5 µm²</td><td>~29.17 MHz</td><td>34.28 ns</td><td>523 mW</td><td>1,240,883</td><td>17,928,440</td></tr>
+    <tr><td>Wallace Tree (WTM)</td><td>40,904.2 µm²</td><td>~73.20 MHz</td><td>13.66 ns</td><td>159 mW</td><td>558,752</td><td>2,171,940</td></tr>
+    <tr><td>Dadda Tree (DTM)</td><td>40,322.4 µm²</td><td>~176.99 MHz</td><td>5.65 ns</td><td>154 mW</td><td>227,822</td><td>870,100</td></tr>
+  </table>
+  </div>
+
+  <h2>Latency and throughput</h2>
+  <div class="spec-scroll">
+  <table class="spec-table">
+    <tr><th>Architecture</th><th>Cycles / multiplication</th><th>Latency</th><th>Multiplications / second</th></tr>
+    <tr><td>Shift-and-Add</td><td>32</td><td>198.4 ns</td><td>~5.04 million</td></tr>
+    <tr><td>Braun Array</td><td>1</td><td>34.28 ns</td><td>~29.17 million</td></tr>
+    <tr><td>Wallace Tree</td><td>1</td><td>13.66 ns</td><td>~73.20 million</td></tr>
+    <tr><td>Dadda Tree</td><td>1</td><td>5.65 ns</td><td>~176.99 million</td></tr>
+  </table>
+  </div>
+
+  <h2>Relative to Shift-and-Add</h2>
+  <div class="spec-scroll">
+  <table class="spec-table">
+    <tr><th>Architecture</th><th>Area</th><th>Fmax</th><th>Power</th><th>Latency</th><th>Throughput</th></tr>
+    <tr><td>Braun Array</td><td>3.91&times;</td><td>0.18&times;</td><td>648.08&times;</td><td>0.17&times;</td><td>5.79&times;</td></tr>
+    <tr><td>Wallace Tree</td><td>4.41&times;</td><td>0.45&times;</td><td>197.03&times;</td><td>0.069&times;</td><td>14.52&times;</td></tr>
+    <tr><td>Dadda Tree</td><td>4.35&times;</td><td>1.10&times;</td><td>190.83&times;</td><td>0.028&times;</td><td>35.12&times;</td></tr>
+  </table>
+  </div>
+  <div class="note">Dadda Tree reaches roughly 35&times; the throughput of Shift-and-Add for about 4.4&times; the area, the clearest area-for-speed trade in the set. It also beats Wallace Tree on both area and speed, since a Dadda reduction tree needs fewer partial-product reduction stages for the same operand width.</div>
+
+  <div class="tools">Toolchain: <span>Verilog, Icarus Verilog, Yosys, OpenSTA, GTKWave, Sky130HD</span></div>
+
+  <div class="repo-cta"><a class="cta" href="https://github.com/KARAN-D05/High-Performance-Multipliers">View repository on GitHub &rarr;</a></div>
+
+  <div class="prev-next">
+    <a href="project-adders.html">&larr; High-Performance Adder Architectures</a>
+    <a href="project-artificial-neuron.html">Next: Artificial Neuron &rarr;</a>
+  </div>
+
+  <footer class="site">
+    <a href="mailto:karandiwan46@gmail.com">karandiwan46@gmail.com</a>
+    <a href="https://www.linkedin.com/in/karan-diwan05">LinkedIn</a>
+    <a href="https://github.com/KARAN-D05">GitHub</a>
+  </footer>
+
+</div>
+</body>
+</html>

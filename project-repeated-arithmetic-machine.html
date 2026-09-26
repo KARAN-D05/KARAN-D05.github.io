@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Repeated Arithmetic Machine — Karan Diwan</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <a class="mark" href="index.html">Karan Diwan</a>
+    <nav class="site">
+      <a href="index.html">Home</a>
+      <a href="projects.html" class="active">Projects</a>
+      <a href="https://github.com/KARAN-D05">GitHub</a>
+    </nav>
+  </header>
+
+  <p class="breadcrumb"><a href="projects.html">Projects</a> / Repeated Arithmetic Machine</p>
+
+  <h1 class="page-title">Repeated Arithmetic Machine</h1>
+  <p class="tagline">A 4-bit feedback-driven computing machine, from a single self-correcting adder to a stored-program automaton.</p>
+
+  <p>This project began from a simple question: what if the output of an arithmetic operation could be fed back into its own input? The first prototype could only add and take feedback. Five versions later, the Repeated Arithmetic Machine (RAM) is a modular 4-bit system with feedback-driven control, automatic error correction, and the ability to execute programs stored in memory. It's the hardware root the rest of this work builds on, the point where the project crossed from circuits into a programmable system.</p>
+
+  <figure>
+    <img class="diagram" src="https://raw.githubusercontent.com/KARAN-D05/Repeated-Arithmetic-Machine/main/RAM_V3/images/r_a_mv3-Division.gif" alt="RAM V3 performing division, waveform demonstration" loading="lazy">
+    <figcaption>RAM V3 performing division: self-correcting, state-based control.</figcaption>
+  </figure>
+
+  <h2>Evolution</h2>
+  <ul class="stage-list">
+    <li><strong>V0</strong>, proof of concept: a single feedback-driven adder.</li>
+    <li><strong>V1</strong>, manual arithmetic logic and two's complement handling.</li>
+    <li><strong>V2</strong>, a low level of automation added to the control path.</li>
+    <li><strong>V3</strong>, self-correction, state-based control, and a high level of automation.</li>
+    <li><strong>V4</strong>, sequential execution of instructions stored in memory.</li>
+  </ul>
+
+  <p>The instruction set was not designed on paper first. It emerged from the machine's own hardware primitives, addition, subtraction, feedback correction, fault recovery, reset, and was mapped to assembly only afterward. Each instruction corresponds to a dedicated hardware operation rather than a microcoded sequence, so the software vocabulary of the machine was discovered from its hardware.</p>
+
+  <figure>
+    <img class="diagram" src="https://raw.githubusercontent.com/KARAN-D05/Repeated-Arithmetic-Machine/main/RAM_V4/r_a_mv4-machine-code-instruction-format.png" alt="RAM V4 machine code instruction format" loading="lazy">
+    <figcaption>Machine-code instruction format, RAM V4.</figcaption>
+  </figure>
+
+  <h2>Synthesis and verification</h2>
+  <p>Every module was synthesized with Yosys, technology-mapped to the Sky130HD standard-cell library, and analyzed for timing and power to confirm the design is hardware-realizable rather than only functionally correct in simulation.</p>
+
+  <div class="spec-scroll">
+  <table class="spec-table">
+    <caption>Post-synthesis characterization, Sky130HD</caption>
+    <tr><th>Module</th><th>Cells</th><th>Area</th><th>Critical path</th><th>Power</th></tr>
+    <tr><td>Operand Storage System</td><td>9</td><td>337.8 µm²</td><td>0.64 ns</td><td>57.3 µW</td></tr>
+    <tr><td>Arithmetic Unit</td><td>8</td><td>376.6 µm²</td><td>1.56 ns</td><td>174 µW</td></tr>
+    <tr><td>Feedback System</td><td>4</td><td>25.0 µm²</td><td>0.10 ns</td><td>3.24 µW</td></tr>
+    <tr><td>RAM Engine (full system)</td><td>21</td><td>718.2 µm²</td><td>1.99 ns</td><td>186 µW</td></tr>
+  </table>
+  </div>
+  <div class="note">Estimated system Fmax is approximately 502 MHz, set by the RAM Engine's 1.99 ns critical path. The Arithmetic Unit alone accounts for 52% of area and 94% of power, making it the dominant cost in the system.</div>
+
+  <figure>
+    <img class="diagram" src="https://raw.githubusercontent.com/KARAN-D05/Repeated-Arithmetic-Machine/main/RAM_Engine/RAM_Engine_Verilog/Images/system-waveform.png" alt="RTL simulation waveform of the RAM Engine" loading="lazy">
+    <figcaption>RTL simulation of the RAM Engine.</figcaption>
+  </figure>
+
+  <p>The assembly layer built on top of this machine is its own project. See <a class="inline" href="project-assembler.html">Assembler</a>.</p>
+
+  <div class="tools">Toolchain: <span>Logisim, Icarus Verilog, Verilator, Yosys, OpenSTA, GTKWave, Sky130HD</span></div>
+
+  <div class="repo-cta"><a class="cta" href="https://github.com/KARAN-D05/Repeated-Arithmetic-Machine">View repository on GitHub &rarr;</a></div>
+
+  <div class="prev-next">
+    <span></span>
+    <a href="project-assembler.html">Next: Assembler &rarr;</a>
+  </div>
+
+  <footer class="site">
+    <a href="mailto:karandiwan46@gmail.com">karandiwan46@gmail.com</a>
+    <a href="https://www.linkedin.com/in/karan-diwan05">LinkedIn</a>
+    <a href="https://github.com/KARAN-D05">GitHub</a>
+  </footer>
+
+</div>
+</body>
+</html>

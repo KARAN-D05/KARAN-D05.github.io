@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Gate-Level Cybernetic Classifier — Karan Diwan</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <a class="mark" href="index.html">Karan Diwan</a>
+    <nav class="site">
+      <a href="index.html">Home</a>
+      <a href="projects.html" class="active">Projects</a>
+      <a href="https://github.com/KARAN-D05">GitHub</a>
+    </nav>
+  </header>
+
+  <p class="breadcrumb"><a href="projects.html">Projects</a> / Gate-Level Cybernetic Classifier</p>
+
+  <h1 class="page-title">Gate-Level Cybernetic Classifier</h1>
+  <p class="tagline">A binary classifier that corrects its own decision boundary from feedback, in pure deterministic hardware.</p>
+
+  <p>This project asks how far adaptive behavior can go without software: can a purely deterministic gate-level circuit alter its own decision boundary in response to feedback, with no processor or instruction set involved? It evolves in three stages, from strict Boolean pattern matching, through pop-count similarity against a variable threshold, to a feedback-driven system that corrects itself.</p>
+
+  <h2>Versions built</h2>
+  <ul class="stage-list">
+    <li><strong>Detector v0.0 to v0.2</strong>, strict Boolean matching. No learning; the decision boundary is fixed by structural wiring. v0.2 adds a 2-point-of-view analysis distinguishing sub-pattern, super-pattern, anti-pattern, and equivalence.</li>
+    <li><strong>Detector v1.0</strong>, pop-count-based recognition against a variable threshold, replacing exact equivalence with a tolerance the designer can adjust.</li>
+    <li><strong>Detector v1.1</strong>, cybernetic feedback-driven adaptive learning. The system now adjusts its own threshold in response to an error signal, with no manual intervention.</li>
+  </ul>
+
+  <figure>
+    <img class="diagram" src="https://raw.githubusercontent.com/KARAN-D05/Gate-Level-Cybernetic-Classifier/main/Detector_v1.0/images/Block-Diagram.png" alt="Cybernetic classifier block diagram, v1.0" loading="lazy">
+    <figcaption>Detector v1.0: a manually alterable decision boundary, the precursor to autonomous correction.</figcaption>
+  </figure>
+
+  <h2>Two correction algorithms</h2>
+  <p>Version 1.1 implements two distinct approaches to threshold correction, each with a formal convergence proof for thresholds M in the range 1 to 15: Max-Initialized Decremental Search (MIDS), which starts at the maximum threshold and searches downward, and State-Aware Threshold Update (SATU), which computes the correct threshold directly from the current and desired output.</p>
+
+  <div class="spec-scroll">
+  <table class="spec-table">
+    <tr><th>Property</th><th>MIDS</th><th>SATU</th></tr>
+    <tr><td>Correction speed</td><td>O(N)</td><td>O(1)</td></tr>
+    <tr><td>Strategy</td><td>Iterative threshold traversal</td><td>Direct threshold computation</td></tr>
+    <tr><td>Threshold memory</td><td>Required</td><td>Not required</td></tr>
+    <tr><td>Synchronization</td><td>Multiple requirements</td><td>Single synchronizer</td></tr>
+    <tr><td>Hardware complexity</td><td>Higher</td><td>Lower</td></tr>
+  </table>
+  </div>
+
+  <figure>
+    <img class="diagram" src="https://raw.githubusercontent.com/KARAN-D05/Gate-Level-Cybernetic-Classifier/main/Detector_v1.1/images/Speed_Complexity.png" alt="Correction speed complexity comparison chart" loading="lazy">
+    <figcaption>Correction speed: O(N) search versus O(1) direct computation.</figcaption>
+  </figure>
+
+  <h2>Physical characterization</h2>
+  <div class="spec-scroll">
+  <table class="spec-table">
+    <caption>Post-synthesis characterization, Sky130HD</caption>
+    <tr><th>Version</th><th>Module</th><th>Area</th><th>Crit. path</th><th>Power</th></tr>
+    <tr><td>v0.0</td><td>Eq/Sub Recognizer</td><td>127.6 µm²</td><td>0.46 ns</td><td>30.8 µW</td></tr>
+    <tr><td>v0.2</td><td>Multi-POV Classifier</td><td>230.2 µm²</td><td>1.16 ns</td><td>60.6 µW</td></tr>
+    <tr><td>v1.0</td><td>Pop-Count Recognition</td><td>970.9 µm²</td><td>4.58 ns</td><td>599 µW</td></tr>
+    <tr><td>v1.1</td><td>MIDS (search)</td><td>1,244.9 µm²</td><td>1.76 ns</td><td>833 µW</td></tr>
+    <tr><td>v1.1</td><td>SATU (compute)</td><td>1,178.6 µm²</td><td>2.09 ns</td><td>1.10 mW</td></tr>
+  </table>
+  </div>
+  <div class="note">Both correction algorithms converge for every threshold in range, but they are not free: MIDS' fastest adaptive design still costs roughly 10&times; the area of the strict Boolean recognizer it started from. Adaptation here means changing state in response to feedback; it deliberately does not include persistent retention of what was learned across different patterns, left as a possible extension.</div>
+
+  <div class="tools">Toolchain: <span>Logisim, Icarus Verilog, Verilator, Yosys, OpenSTA, GTKWave, Sky130HD</span></div>
+
+  <div class="repo-cta"><a class="cta" href="https://github.com/KARAN-D05/Gate-Level-Cybernetic-Classifier">View repository on GitHub &rarr;</a></div>
+
+  <div class="prev-next">
+    <a href="project-artificial-neuron.html">&larr; Artificial Neuron</a>
+    <span></span>
+  </div>
+
+  <footer class="site">
+    <a href="mailto:karandiwan46@gmail.com">karandiwan46@gmail.com</a>
+    <a href="https://www.linkedin.com/in/karan-diwan05">LinkedIn</a>
+    <a href="https://github.com/KARAN-D05">GitHub</a>
+  </footer>
+
+</div>
+</body>
+</html>

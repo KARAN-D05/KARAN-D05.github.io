@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Artificial Neuron — Karan Diwan</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <a class="mark" href="index.html">Karan Diwan</a>
+    <nav class="site">
+      <a href="index.html">Home</a>
+      <a href="projects.html" class="active">Projects</a>
+      <a href="https://github.com/KARAN-D05">GitHub</a>
+    </nav>
+  </header>
+
+  <p class="breadcrumb"><a href="projects.html">Projects</a> / Artificial Neuron</p>
+
+  <h1 class="page-title">Artificial Neuron</h1>
+  <p class="tagline">A gate-level McCulloch&ndash;Pitts neuron: the smallest bridge from logic gates to a model of a neuron.</p>
+
+  <p>This project implements a basic McCulloch&ndash;Pitts artificial neuron directly in Verilog: two binary inputs, a programmable threshold, and inhibitory weights. Varying the threshold alone is enough to reproduce AND and OR logic; adding an inhibitory weight reproduces NOT. It's a small project, but it marks the point where the rest of this work turns from pure arithmetic toward models of learning and decision, continued in the <a class="inline" href="project-cybernetic-classifier.html">Gate-Level Cybernetic Classifier</a>.</p>
+
+  <figure>
+    <img class="diagram" src="https://raw.githubusercontent.com/KARAN-D05/Artificial-Neuron/main/MCP-Neuron_v0/images/Block-diagram.png" alt="McCulloch-Pitts neuron block diagram" loading="lazy">
+    <figcaption>MCP neuron reproducing AND and OR logic via threshold adjustment.</figcaption>
+  </figure>
+
+  <h2>Versions built</h2>
+  <ul class="stage-list">
+    <li><strong>MCP-Neuron v0</strong>, a 2-input neuron implementing AND and OR logic.</li>
+    <li><strong>MCP-Neuron v1</strong>, inhibitory weights added, implementing NOT logic.</li>
+  </ul>
+
+  <div class="fig-row">
+    <figure>
+      <img class="diagram" src="https://raw.githubusercontent.com/KARAN-D05/Artificial-Neuron/main/MCP-Neuron_v0/images/AND-Emulation.png" alt="AND logic emulation, Python reference model" loading="lazy">
+      <figcaption>AND emulation, Python reference model.</figcaption>
+    </figure>
+    <figure>
+      <img class="diagram" src="https://raw.githubusercontent.com/KARAN-D05/Artificial-Neuron/main/MCP-Neuron_v0/images/Waveform.png" alt="RTL waveform of the neuron" loading="lazy">
+      <figcaption>RTL simulation waveform, MCP-Neuron v0.</figcaption>
+    </figure>
+  </div>
+
+  <div class="tools">Toolchain: <span>Verilog, Icarus Verilog, Yosys, GTKWave, Python (reference model)</span></div>
+
+  <div class="repo-cta"><a class="cta" href="https://github.com/KARAN-D05/Artificial-Neuron">View repository on GitHub &rarr;</a></div>
+
+  <div class="prev-next">
+    <a href="project-multipliers.html">&larr; High-Performance Multipliers</a>
+    <a href="project-cybernetic-classifier.html">Next: Gate-Level Cybernetic Classifier &rarr;</a>
+  </div>
+
+  <footer class="site">
+    <a href="mailto:karandiwan46@gmail.com">karandiwan46@gmail.com</a>
+    <a href="https://www.linkedin.com/in/karan-diwan05">LinkedIn</a>
+    <a href="https://github.com/KARAN-D05">GitHub</a>
+  </footer>
+
+</div>
+</body>
+</html>

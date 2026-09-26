@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Assembler — Karan Diwan</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <a class="mark" href="index.html">Karan Diwan</a>
+    <nav class="site">
+      <a href="index.html">Home</a>
+      <a href="projects.html" class="active">Projects</a>
+      <a href="https://github.com/KARAN-D05">GitHub</a>
+    </nav>
+  </header>
+
+  <p class="breadcrumb"><a href="projects.html">Projects</a> / Assembler</p>
+
+  <h1 class="page-title">Assembler</h1>
+  <p class="tagline">A custom assembly language and Python assembler, the step from wires to words.</p>
+
+  <p>Once the <a class="inline" href="project-repeated-arithmetic-machine.html">Repeated Arithmetic Machine</a> could execute stored instructions in raw machine code, the natural next step was a symbolic layer above it: an assembly language whose mnemonics map directly onto the machine's own hardware primitives, and a Python assembler that lexes, parses, and validates programs before translating them down to machine code.</p>
+
+  <figure>
+    <img class="diagram" src="https://raw.githubusercontent.com/KARAN-D05/Assembler/main/asm-v0/Mnemonics.png" alt="Custom assembly language mnemonic table" loading="lazy">
+    <figcaption>Mnemonic set for asm-v0, reflecting the machine's hardware primitives directly.</figcaption>
+  </figure>
+
+  <h2>Versions built</h2>
+  <ul class="stage-list">
+    <li><strong>asm-v0.1</strong>, data-control operations mapped to assembly.</li>
+    <li><strong>asm-v0.2</strong>, arithmetic, system, and temporal control mapped to assembly.</li>
+    <li><strong>asm-v0.3</strong>, syntax analysis, semantic analysis, and an instruction execution report added.</li>
+  </ul>
+
+  <div class="fig-row">
+    <figure>
+      <img class="diagram" src="https://raw.githubusercontent.com/KARAN-D05/Assembler/main/asm-v0/asm-v0.3/images/syntax_analysis2.png" alt="Syntax analysis output" loading="lazy">
+      <figcaption>Syntax analysis, asm-v0.3.</figcaption>
+    </figure>
+    <figure>
+      <img class="diagram" src="https://raw.githubusercontent.com/KARAN-D05/Assembler/main/asm-v0/asm-v0.3/images/semantic_analysis.png" alt="Semantic analysis output" loading="lazy">
+      <figcaption>Semantic analysis, asm-v0.3.</figcaption>
+    </figure>
+  </div>
+
+  <p>Syntax analysis catches malformed programs before they reach the assembler, saving computation on programs that would fail anyway. Semantic analysis goes a step further, catching logical flaws, like referencing an undefined address, that are syntactically valid but would fail on the real machine.</p>
+
+  <h2>What's next</h2>
+  <p>Planned work includes deeper semantic validation and macros: mapping multiple low-level instruction sequences to a single mnemonic, so more complex machine behavior can be expressed in fewer lines of assembly.</p>
+
+  <div class="tools">Stack: <span>Python, custom lexer and parser, syntax and semantic analysis</span></div>
+
+  <div class="repo-cta"><a class="cta" href="https://github.com/KARAN-D05/Assembler">View repository on GitHub &rarr;</a></div>
+
+  <div class="prev-next">
+    <a href="project-repeated-arithmetic-machine.html">&larr; Repeated Arithmetic Machine</a>
+    <a href="project-harvard-processor.html">Next: Harvard Processor &rarr;</a>
+  </div>
+
+  <footer class="site">
+    <a href="mailto:karandiwan46@gmail.com">karandiwan46@gmail.com</a>
+    <a href="https://www.linkedin.com/in/karan-diwan05">LinkedIn</a>
+    <a href="https://github.com/KARAN-D05">GitHub</a>
+  </footer>
+
+</div>
+</body>
+</html>

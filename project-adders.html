@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>High-Performance Adder Architectures — Karan Diwan</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <a class="mark" href="index.html">Karan Diwan</a>
+    <nav class="site">
+      <a href="index.html">Home</a>
+      <a href="projects.html" class="active">Projects</a>
+      <a href="https://github.com/KARAN-D05">GitHub</a>
+    </nav>
+  </header>
+
+  <p class="breadcrumb"><a href="projects.html">Projects</a> / High-Performance Adder Architectures</p>
+
+  <h1 class="page-title">High-Performance Adder Architectures</h1>
+  <p class="tagline">Six 64-bit adder topologies, characterized on identical terms.</p>
+
+  <p>Binary addition can be built a dozen ways, and each one trades area, speed, and power differently depending on how the carry chain is computed. This project implements and characterizes six 64-bit adders on identical terms so that trade-off is concrete rather than theoretical: Ripple-Carry (RCA), Carry-Select (CSA), Carry-Bypass (CBA), Carry-Lookahead (CLA), Kogge-Stone (KSA), and Brent-Kung (BKA).</p>
+
+  <p>Primary characterization uses the Sky130HD standard-cell library, with Nangate45 used for cross-library comparison, and design-space exploration performed on selected architectures to study how block width trades area against timing within a single topology.</p>
+
+  <figure>
+    <img class="diagram" src="https://raw.githubusercontent.com/KARAN-D05/High-Performance-Adder-Architectures/main/images/Performance_Analysis.png" alt="Adder architecture performance comparison chart" loading="lazy">
+    <figcaption>Estimated Fmax across all six topologies, Sky130HD.</figcaption>
+  </figure>
+
+  <h2>Post-synthesis characterization, Sky130HD</h2>
+  <div class="spec-scroll">
+  <table class="spec-table">
+    <tr><th>Topology</th><th>Area</th><th>Crit. path</th><th>Fmax</th><th>Power</th><th>ADP</th><th>PDP</th></tr>
+    <tr><td>Ripple-Carry (RCA)</td><td>1,761.7 µm²</td><td>25.00 ns</td><td>~40 MHz</td><td>925 µW</td><td>44,042</td><td>23,125</td></tr>
+    <tr><td>Carry-Select (CSA)</td><td>2,635.0 µm²</td><td>7.23 ns</td><td>~138.3 MHz</td><td>1,580 µW</td><td>19,051</td><td>11,423</td></tr>
+    <tr><td>Carry-Bypass (CBA)</td><td>2,875.3 µm²</td><td>24.09 ns</td><td>~41.5 MHz</td><td>1,400 µW</td><td>69,265</td><td>33,726</td></tr>
+    <tr><td>Carry-Lookahead (CLA)</td><td>7,204.4 µm²</td><td>3.22 ns</td><td>~310.6 MHz</td><td>2,590 µW</td><td>23,198</td><td>8,340</td></tr>
+    <tr><td>Kogge-Stone (KSA)</td><td>3,080.5 µm²</td><td>3.88 ns</td><td>~257.7 MHz</td><td>1,620 µW</td><td>11,952</td><td>6,286</td></tr>
+    <tr><td>Brent-Kung (BKA)</td><td>2,058.2 µm²</td><td>12.89 ns</td><td>~77.6 MHz</td><td>1,020 µW</td><td>26,531</td><td>13,148</td></tr>
+  </table>
+  </div>
+  <div class="note">ADP (area-delay product) and PDP (power-delay product): lower is better for both. Kogge-Stone gives the best balance on both metrics of the six; Carry-Lookahead wins outright on raw speed at roughly 4&times; the area of Ripple-Carry.</div>
+
+  <h2>Relative to Ripple-Carry, Sky130HD</h2>
+  <div class="spec-scroll">
+  <table class="spec-table">
+    <tr><th>Topology</th><th>Area</th><th>Fmax</th><th>Power</th><th>ADP</th><th>PDP</th></tr>
+    <tr><td>Carry-Select</td><td>1.50&times;</td><td>3.46&times;</td><td>1.71&times;</td><td>0.43&times;</td><td>0.49&times;</td></tr>
+    <tr><td>Carry-Bypass</td><td>1.63&times;</td><td>1.04&times;</td><td>1.51&times;</td><td>1.57&times;</td><td>1.46&times;</td></tr>
+    <tr><td>Carry-Lookahead</td><td>4.09&times;</td><td>7.77&times;</td><td>2.80&times;</td><td>0.53&times;</td><td>0.36&times;</td></tr>
+    <tr><td>Kogge-Stone</td><td>1.75&times;</td><td>6.44&times;</td><td>1.75&times;</td><td>0.27&times;</td><td>0.27&times;</td></tr>
+    <tr><td>Brent-Kung</td><td>1.17&times;</td><td>1.94&times;</td><td>1.10&times;</td><td>0.60&times;</td><td>0.57&times;</td></tr>
+  </table>
+  </div>
+
+  <h2>Block-width study</h2>
+  <p>For block-structured topologies (CLA, CSA, CBA), block width is a free parameter: wider blocks reduce the number of stages the carry has to ripple through but grow the logic inside each block. Sweeping this parameter on the Nangate45 library shows the trade-off directly.</p>
+
+  <figure>
+    <img class="diagram" src="https://raw.githubusercontent.com/KARAN-D05/High-Performance-Adder-Architectures/main/CLA/images/width_vs_timing.png" alt="CLA block width versus timing and area chart" loading="lazy">
+    <figcaption>Maximum combinational delay and area versus CLA block width, Nangate45.</figcaption>
+  </figure>
+
+  <h2>Cross-library comparison, Nangate45</h2>
+  <div class="spec-scroll">
+  <table class="spec-table">
+    <tr><th>Topology</th><th>Area</th><th>Crit. path</th><th>Fmax</th><th>Power</th></tr>
+    <tr><td>RCA</td><td>391.6 µm²</td><td>2.10 ns</td><td>~476.2 MHz</td><td>246 µW</td></tr>
+    <tr><td>CSA</td><td>519.8 µm²</td><td>1.11 ns</td><td>~900.9 MHz</td><td>446 µW</td></tr>
+    <tr><td>CBA</td><td>551.2 µm²</td><td>2.90 ns</td><td>~344.8 MHz</td><td>330 µW</td></tr>
+    <tr><td>CLA</td><td>1,441.2 µm²</td><td>0.85 ns</td><td>~1,176.5 MHz</td><td>729 µW</td></tr>
+    <tr><td>KSA</td><td>653.3 µm²</td><td>0.95 ns</td><td>~1,052.6 MHz</td><td>462 µW</td></tr>
+    <tr><td>BKA</td><td>416.6 µm²</td><td>1.83 ns</td><td>~546.4 MHz</td><td>285 µW</td></tr>
+  </table>
+  </div>
+  <div class="note">The ranking shifts between libraries: CLA leads on raw Fmax in both, but by a smaller margin on Nangate45, showing that a topology's advantage is partly a function of the standard-cell library it's mapped to, not a fixed property of the algorithm.</div>
+
+  <p>This adder IP is reused directly as the final carry-propagate stage in <a class="inline" href="project-multipliers.html">High-Performance Multipliers</a>.</p>
+
+  <div class="tools">Toolchain: <span>Verilog, Icarus Verilog, Yosys, OpenSTA, GTKWave, Sky130HD, Nangate45</span></div>
+
+  <div class="repo-cta"><a class="cta" href="https://github.com/KARAN-D05/High-Performance-Adder-Architectures">View repository on GitHub &rarr;</a></div>
+
+  <div class="prev-next">
+    <a href="project-harvard-processor.html">&larr; Harvard Processor</a>
+    <a href="project-multipliers.html">Next: High-Performance Multipliers &rarr;</a>
+  </div>
+
+  <footer class="site">
+    <a href="mailto:karandiwan46@gmail.com">karandiwan46@gmail.com</a>
+    <a href="https://www.linkedin.com/in/karan-diwan05">LinkedIn</a>
+    <a href="https://github.com/KARAN-D05">GitHub</a>
+  </footer>
+
+</div>
+</body>
+</html>
