@@ -56,26 +56,13 @@
     <figcaption>Correction speed: O(N) search versus O(1) direct computation.</figcaption>
   </figure>
 
-  <h2>Physical characterization</h2>
-  <div class="spec-scroll">
-  <table class="spec-table">
-    <caption>Post-synthesis characterization, Sky130HD</caption>
-    <tr><th>Version</th><th>Module</th><th>Area</th><th>Crit. path</th><th>Power</th></tr>
-    <tr><td>v0.0</td><td>Eq/Sub Recognizer</td><td>127.6 µm²</td><td>0.46 ns</td><td>30.8 µW</td></tr>
-    <tr><td>v0.2</td><td>Multi-POV Classifier</td><td>230.2 µm²</td><td>1.16 ns</td><td>60.6 µW</td></tr>
-    <tr><td>v1.0</td><td>Pop-Count Recognition</td><td>970.9 µm²</td><td>4.58 ns</td><td>599 µW</td></tr>
-    <tr><td>v1.1</td><td>MIDS (search)</td><td>1,244.9 µm²</td><td>1.76 ns</td><td>833 µW</td></tr>
-    <tr><td>v1.1</td><td>SATU (compute)</td><td>1,178.6 µm²</td><td>2.09 ns</td><td>1.10 mW</td></tr>
-  </table>
-  </div>
-  <div class="note">Both correction algorithms converge for every threshold in range, but they are not free: MIDS' fastest adaptive design still costs roughly 10&times; the area of the strict Boolean recognizer it started from. Adaptation here means changing state in response to feedback; it deliberately does not include persistent retention of what was learned across different patterns, left as a possible extension.</div>
-
   <div class="tools">Toolchain: <span>Logisim, Icarus Verilog, Verilator, Yosys, OpenSTA, GTKWave, Sky130HD</span></div>
 
   <div class="repo-cta"><a class="cta" href="https://github.com/KARAN-D05/Gate-Level-Cybernetic-Classifier">View repository on GitHub &rarr;</a></div>
 
   <div class="prev-next">
-    <a href="project-artificial-neuron.html">&larr; Artificial Neuron</a>
+    <a href="project-adders.html">&larr; High-Performance Adder Architectures</a>
+    <a href="project-repeated-arithmetic-machine.html">&larr; Repeated Arithmetic Machine</a>
     <span></span>
   </div>
 
