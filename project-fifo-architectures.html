@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FIFO Architectures — Karan Diwan</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <a class="mark" href="index.html">Karan Diwan</a>
+    <nav class="site">
+      <a href="index.html">Home</a>
+      <a href="projects.html" class="active">Projects</a>
+      <a href="https://github.com/KARAN-D05">GitHub</a>
+    </nav>
+  </header>
+
+  <p class="breadcrumb"><a href="projects.html">Projects</a> / FIFO Architectures</p>
+
+  <h1 class="page-title">FIFO Architectures</h1>
+  <p class="tagline">Three FIFOs in Chisel, showing how the architecture changes with clocking, clock-domain crossing, and control flow.</p>
+
+  <p>A FIFO looks like one component, but its right design depends on what the system around it demands. This project implements three parameterized FIFOs in Chisel, a Scala-embedded hardware construction language: a synchronous FIFO in a single clock domain, an asynchronous FIFO that crosses between independent read and write clocks, and an elastic FIFO with valid/ready flow control for backpressure. Each is elaborated into SystemVerilog and taken through simulation, verification, synthesis, and timing analysis.</p>
+
+  <figure>
+    <img class="diagram" src="https://raw.githubusercontent.com/KARAN-D05/FIFO-Architectures/main/Synchronous/images/waveform.png" alt="Synchronous FIFO simulation waveform" loading="lazy">
+    <figcaption>Synchronous FIFO simulation waveform.</figcaption>
+  </figure>
+
+  <h2>Architectures built</h2>
+  <ul class="stage-list">
+    <li><strong>Synchronous FIFO</strong>, a single clock domain with circular memory addressing, read/write pointers, occupancy tracking, and concurrent read/write support.</li>
+    <li><strong>Asynchronous FIFO</strong>, independent read and write clock domains, with cross-domain pointer synchronization so full and empty can be detected safely across the boundary.</li>
+    <li><strong>Elastic FIFO</strong>, a single clock domain with a valid/ready interface, where full and empty are expressed through handshake signaling and backpressure propagates to the producer.</li>
+  </ul>
+
+  <h2>Post-synthesis characterization, Sky130HD</h2>
+  <p>All three are characterized at the same configuration, 16 &times; 8-bit (128 bits of storage).</p>
+  <div class="spec-scroll">
+  <table class="spec-table">
+    <tr><th>Architecture</th><th>Area</th><th>Crit. path</th><th>Fmax</th><th>Power</th></tr>
+    <tr><td>Synchronous FIFO</td><td>5,915.7 µm²</td><td>3.03 ns</td><td>~330 MHz</td><td>865 µW</td></tr>
+    <tr><td>Asynchronous FIFO</td><td>6,730.2 µm²</td><td>2.94 ns</td><td>~340 MHz</td><td>2,130 µW</td></tr>
+    <tr><td>Elastic FIFO</td><td>5,620.4 µm²</td><td>2.94 ns</td><td>~340 MHz</td><td>793 µW</td></tr>
+  </table>
+  </div>
+  <div class="note">The asynchronous FIFO pays for clock-domain crossing in both area and power, with roughly 2.5&times; the power of the synchronous design. Its worst-case path is on the read clock (2.94 ns); the write clock path is 2.29 ns.</div>
+
+  <h2>Verification</h2>
+  <p>Each architecture is verified at three levels: Chisel-native directed and randomized tests, an independent SystemVerilog testbench on the generated RTL, and gate-level simulation of the post-synthesis netlist using Sky130HD functional cell models.</p>
+
+  <div class="tools">Toolchain: <span>Chisel, Scala, SystemVerilog, Icarus Verilog, Yosys, OpenSTA, GTKWave, Sky130HD</span></div>
+
+  <div class="repo-cta"><a class="cta" href="https://github.com/KARAN-D05/FIFO-Architectures">View repository on GitHub &rarr;</a></div>
+
+  <div class="prev-next">
+    <a href="project-cybernetic-classifier.html">&larr; Gate-Level Cybernetic Classifier</a>
+    <a href="project-repeated-arithmetic-machine.html">Next: Repeated Arithmetic Machine &rarr;</a>
+  </div>
+
+  <footer class="site">
+    <a href="mailto:karandiwan46@gmail.com">karandiwan46@gmail.com</a>
+    <a href="https://www.linkedin.com/in/karan-diwan05">LinkedIn</a>
+    <a href="https://github.com/KARAN-D05">GitHub</a>
+  </footer>
+
+</div>
+</body>
+</html>
