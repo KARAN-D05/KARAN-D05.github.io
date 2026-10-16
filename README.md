@@ -12,8 +12,8 @@ Website: https://karan-d05.github.io
 4. [Hopfield Network](https://github.com/KARAN-D05/Hopfield-Network) - A binary Hopfield neural network in SystemVerilog, taken from RTL through synthesis and physical implementation to GDSII.
 5. [Gate-Level Cybernetic Classifier](https://github.com/KARAN-D05/Gate-Level-Cybernetic-Classifier) - A binary classifier that corrects its own decision boundary from feedback in pure deterministic hardware.
 6. [FIFO Architectures](https://github.com/KARAN-D05/FIFO-Architectures) - Synchronous, asynchronous, and elastic FIFOs in Chisel, showing how architecture changes with clocking, clock-domain crossing, and control flow.
-7. [Repeated Arithmetic Machine](https://github.com/KARAN-D05/Repeated-Arithmetic-Machine) - A 4-bit feedback-driven machine that evolves from a self-correcting adder to a stored-program automaton.
-8. [Assembler](https://github.com/KARAN-D05/Assembler) - A custom assembly language and Python assembler with lexical, syntax, and semantic analysis.
+7. [Repeated Arithmetic Machine](https://github.com/KARAN-D05/Repeated-Arithmetic-Machine) - A 4-bit feedback-driven machine that evolves from a self-correcting arithmetic unit to a stored-program automaton.
+8. [Assembler](https://github.com/KARAN-D05/Assembler) - A custom assembly language and Python assembler with lexical, syntax, and semantic analysis for a custom computing machine.
 9. [Artificial Neuron](https://github.com/KARAN-D05/Artificial-Neuron) - A gate-level McCulloch-Pitts neuron in Verilog, reproducing AND, OR, and NOT through threshold and inhibitory-weight adjustment.
 
 ## Contact
