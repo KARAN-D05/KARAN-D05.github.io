@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>RV64I Pipelined Processor — Karan Diwan</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <a class="mark" href="index.html">Karan Diwan</a>
+    <nav class="site">
+      <a href="index.html">Home</a>
+      <a href="projects.html" class="active">Projects</a>
+      <a href="https://github.com/KARAN-D05">GitHub</a>
+    </nav>
+  </header>
+
+  <p class="breadcrumb"><a href="projects.html">Projects</a> / RV64I Pipelined Processor</p>
+
+  <h1 class="page-title">RV64I Pipelined Processor</h1>
+  <p class="tagline">A 64-bit, five-stage in-order RISC-V pipeline with data forwarding, hazard detection, stalling, and branch flushing.</p>
+
+  <p>The processor implements 49 of the 52 instructions of the RV64I base integer ISA across a classic IF, ID, EX, MEM, WB pipeline. Classified as SISD under Flynn's taxonomy, it exploits instruction-level parallelism by overlapping the execution of multiple instructions. Dedicated modules handle the pipeline's hard parts: a multi-path forwarding network resolves read-after-write dependencies, a hazard unit stalls on load-use cases, and a branch unit flushes wrong-path instructions when control flow is redirected.</p>
+
+  <h2>Hazard handling</h2>
+  <p>Forwarding is split into dedicated paths: EX/MEM to EX, MEM/WB to EX, MEM/WB to MEM for store data, and MEM/WB to ID, with the newer EX/MEM result taking priority when both stages hold the same destination register. The register file deliberately does not rely on negative-edge write and read timing to resolve same-cycle dependencies; an explicit MEM/WB-to-ID path supplies the pending value instead, avoiding half-cycle timing paths between opposite clock edges.</p>
+  <p>A load immediately followed by its consumer stalls the pipeline and inserts a bubble. Branches resolve in EX, so a taken branch or jump invalidates the two younger instructions in IF and ID and redirects the PC to the target.</p>
+
+  <div class="fig-row">
+    <figure>
+      <img class="diagram" src="https://raw.githubusercontent.com/KARAN-D05/RV64I-Pipelined-Processor/main/CORE/images/Load_Use_Waveform.png" alt="Waveform of a load-use hazard with pipeline stall" loading="lazy">
+      <figcaption>Load-use hazard: stall assertion, then forwarding to the dependent ADD.</figcaption>
+    </figure>
+    <figure>
+      <img class="diagram" src="https://raw.githubusercontent.com/KARAN-D05/RV64I-Pipelined-Processor/main/CORE/images/Branch_Waveform.png" alt="Waveform of a taken branch with pipeline flush" loading="lazy">
+      <figcaption>Taken branch resolved in EX, flushing two wrong-path instructions.</figcaption>
+    </figure>
+  </div>
+
+  <h2>Verification</h2>
+  <p>Each mechanism has a directed assembly test with an expected register and memory state, checked in RTL simulation: every forwarding path, forwarding priority, load-use stalling, and branch flushing. An integrated test then combines them in one continuous instruction stream with dependencies, load-use stalls, a taken BEQ, JAL, and JALR, and confirms that the flushed instructions never write their registers and that <code>x0</code> stays zero.</p>
+  <p>The design was also verified through synthesis and post-synthesis gate-level simulation.</p>
+
+  <h2>Running compiled C</h2>
+  <p>To check the core against real software, a C program implementing 64-bit shift-and-add multiplication, without the M extension, is compiled with the RISC-V GNU Toolchain for <code>rv64i</code>, linked with custom startup code, and loaded into instruction ROM as a HEX image. The core returns the correct product in <code>x10</code>.</p>
+
+  <figure>
+    <img class="diagram" src="https://raw.githubusercontent.com/KARAN-D05/RV64I-Pipelined-Processor/main/PERF/Programs/images/Mult_Waveform.png" alt="Waveform of a compiled C multiplication program on the pipeline" loading="lazy">
+    <figcaption>Compiled C multiplication: 123456789 &times; 987654321 = 0x01B13114FBFF5385.</figcaption>
+  </figure>
+
+  <h2>Timing evaluation: adder choice in the datapath</h2>
+  <p>The project's focus is microarchitecture rather than peak frequency, but synthesis-based timing analysis shows how much the adder in the datapath matters. The baseline ripple-carry adders in the target-address and ALU datapaths were swapped for a 64-bit Kogge&ndash;Stone adder and a hierarchical carry-lookahead adder (two 32-bit blocks), reusing the designs from the <a href="project-adders.html">High-Performance Adder Architectures</a> project. Results are Sky130HD.</p>
+
+  <div class="spec-scroll">
+  <table class="spec-table">
+    <caption>Core timing and area by adder configuration, Sky130HD</caption>
+    <tr><th>Configuration</th><th>Core area</th><th>Clock period</th><th>Est. Fmax</th><th>Speedup</th></tr>
+    <tr><td>RCA (TAG + ALU)</td><td>131,735.09 µm²</td><td>30.35 ns</td><td>32.95 MHz</td><td>1.00&times;</td></tr>
+    <tr><td>KSA (TAG + ALU)</td><td>134,935.66 µm²</td><td>20.40 ns</td><td>49.02 MHz</td><td>1.49&times;</td></tr>
+    <tr><td>CLA (TAG + ALU)</td><td>143,044.69 µm²</td><td>19.49 ns</td><td>51.31 MHz</td><td>1.56&times;</td></tr>
+  </table>
+  </div>
+  <p>Kogge&ndash;Stone raised estimated Fmax by about 48.8% for a 2.43% area increase; the carry-lookahead adder raised it by about 55.8% for an 8.59% increase.</p>
+
+  <div class="tools">Toolchain: <span>Verilog, Icarus Verilog, Verilator, Yosys, GTKWave, RISC-V GNU Toolchain, Sky130HD</span></div>
+
+  <div class="repo-cta"><a class="cta" href="https://github.com/KARAN-D05/RV64I-Pipelined-Processor">View repository on GitHub &rarr;</a></div>
+
+  <div class="prev-next">
+    <a href="project-harvard-processor.html">Next: Harvard Processor &rarr;</a>
+  </div>
+
+  <footer class="site">
+    <a href="mailto:karandiwan46@gmail.com">karandiwan46@gmail.com</a>
+    <a href="https://www.linkedin.com/in/karan-diwan05">LinkedIn</a>
+    <a href="https://github.com/KARAN-D05">GitHub</a>
+  </footer>
+
+</div>
+</body>
+</html>
