@@ -25,14 +25,28 @@
 
   <p>The processor implements 49 of the 52 instructions of the RV64I base integer ISA across a classic IF, ID, EX, MEM, WB pipeline. Classified as SISD under Flynn's taxonomy, it exploits instruction-level parallelism by overlapping the execution of multiple instructions. Dedicated modules handle the pipeline's hard parts: a multi-path forwarding network resolves read-after-write dependencies, a hazard unit stalls on load-use cases, and a branch unit flushes wrong-path instructions when control flow is redirected.</p>
 
+  <div class="fig-row">
+    <figure>
+      <img class="diagram" src="https://raw.githubusercontent.com/KARAN-D05/RV64I-Pipelined-Processor/main/PERF/Programs/images/Hello_World_Waveform.png" alt="Hello World! 👋 Generated from C and executed on the RV64I processor" loading="lazy">
+      <figcaption>Hello World! 👋 Generated from C and executed on the RV64I processor</figcaption>
+    </figure>
+  </div>
+  
   <h2>Hazard handling</h2>
   <p>Forwarding is split into dedicated paths: EX/MEM to EX, MEM/WB to EX, MEM/WB to MEM for store data, and MEM/WB to ID, with the newer EX/MEM result taking priority when both stages hold the same destination register. The register file deliberately does not rely on negative-edge write and read timing to resolve same-cycle dependencies; an explicit MEM/WB-to-ID path supplies the pending value instead, avoiding half-cycle timing paths between opposite clock edges.</p>
   <p>A load immediately followed by its consumer stalls the pipeline and inserts a bubble. Branches resolve in EX, so a taken branch or jump invalidates the two younger instructions in IF and ID and redirects the PC to the target.</p>
 
   <div class="fig-row">
     <figure>
-      <img class="diagram" src="https://raw.githubusercontent.com/KARAN-D05/RV64I-Pipelined-Processor/main/CORE/PERF/Programs/images/Hello_World_Waveform.png" alt="Hello World! 👋 Generated from C and executed on the RV64I processor" loading="lazy">
-      <figcaption>Hello World! 👋 Generated from C and executed on the RV64I processor</figcaption>
+      <img class="diagram" src="https://raw.githubusercontent.com/KARAN-D05/RV64I-Pipelined-Processor/main/CORE/images/Load_Use_Waveform.png" alt="Waveform of a load-use hazard with pipeline stall" loading="lazy">
+      <figcaption>Load-use hazard: stall assertion, then forwarding to the dependent ADD</figcaption>
+    </figure>
+  </div>
+
+  <div class="fig-row">
+    <figure>
+      <img class="diagram" src="https://raw.githubusercontent.com/KARAN-D05/RV64I-Pipelined-Processor/main/CORE/images/Branch_Waveform.png" alt="Taken branch resolved in EX, flushing two wrong-path instructions" loading="lazy">
+      <figcaption>Taken branch resolved in EX, flushing two wrong-path instructions</figcaption>
     </figure>
   </div>
 
