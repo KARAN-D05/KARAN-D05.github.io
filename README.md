@@ -6,7 +6,7 @@ Website: https://karan-d05.github.io
 
 ## Projects
 
-1. [RV64I Pipelined Processor](https://github.com/KARAN-D05/RV64I-Pipelined-Processor) - A 64-bit five-stage RISC-V pipelined processor implementing 49 of 52 RV64I instructions, with data forwarding, hazard detection, stalling, and branch flushing.
+1. [RV64I Pipelined Processor](https://github.com/KARAN-D05/RV64I-Pipelined-Processor) - A 64-bit five-stage RISC-V pipelined processor implementing 49 of 52 RV64I instructions, with data forwarding, hazard detection and branch flushing.
 2. [Harvard Processor](https://github.com/KARAN-D05/Harvard-Processor) - A parameterized multi-cycle Harvard-architecture processor built from 12 RTL modules, with an Amdahl's Law-backed study of a control-path optimization.
 3. [High-Performance Adder Architectures](https://github.com/KARAN-D05/High-Performance-Adder-Architectures) - Six 64-bit adder topologies characterized on identical terms, from Ripple-Carry to Kogge-Stone.
 4. [High-Performance Multipliers](https://github.com/KARAN-D05/High-Performance-Multipliers) - Four 32-bit multiplier architectures compared by latency and throughput, including the effect of the final adder stage.
