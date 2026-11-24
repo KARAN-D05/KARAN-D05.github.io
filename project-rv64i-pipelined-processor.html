@@ -31,12 +31,8 @@
 
   <div class="fig-row">
     <figure>
-      <img class="diagram" src="https://raw.githubusercontent.com/KARAN-D05/RV64I-Pipelined-Processor/main/CORE/images/Load_Use_Waveform.png" alt="Waveform of a load-use hazard with pipeline stall" loading="lazy">
-      <figcaption>Load-use hazard: stall assertion, then forwarding to the dependent ADD.</figcaption>
-    </figure>
-    <figure>
-      <img class="diagram" src="https://raw.githubusercontent.com/KARAN-D05/RV64I-Pipelined-Processor/main/CORE/images/Branch_Waveform.png" alt="Waveform of a taken branch with pipeline flush" loading="lazy">
-      <figcaption>Taken branch resolved in EX, flushing two wrong-path instructions.</figcaption>
+      <img class="diagram" src="https://raw.githubusercontent.com/KARAN-D05/RV64I-Pipelined-Processor/main/CORE/PERF/Programs/images/Hello_World_Waveform.png" alt="Hello World! 👋 Generated from C and executed on the RV64I processor" loading="lazy">
+      <figcaption>Hello World! 👋 Generated from C and executed on the RV64I processor</figcaption>
     </figure>
   </div>
 
@@ -53,7 +49,7 @@
   </figure>
 
   <h2>Timing evaluation: adder choice in the datapath</h2>
-  <p>The project's focus is microarchitecture rather than peak frequency, but synthesis-based timing analysis shows how much the adder in the datapath matters. The baseline ripple-carry adders in the target-address and ALU datapaths were swapped for a 64-bit Kogge&ndash;Stone adder and a hierarchical carry-lookahead adder (two 32-bit blocks), reusing the designs from the <a href="project-adders.html">High-Performance Adder Architectures</a> project. Results are Sky130HD.</p>
+  <p>The project's focus is microarchitecture rather than peak frequency, but synthesis-based timing analysis shows how much the adder in the datapath matters. The baseline ripple-carry adders in the target-address and ALU datapaths were swapped for a 64-bit Kogge&ndash;Stone adder and a hierarchical carry-lookahead adder (two 32-bit blocks), reusing the designs from the <a class="inline" href="project-adders.html"> High-Performance Adder Architectures</a> project. Results are Sky130HD.</p>
 
   <div class="spec-scroll">
   <table class="spec-table">
